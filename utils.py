@@ -1,5 +1,5 @@
 import numpy as np
-from image_tools import transform_image
+from image_tools import preprocess, transform_image
 
 """
 Data Augmentation:
@@ -18,3 +18,8 @@ def augment_data(x, y, transformations=[40, 5, 5]):
             labels.append(y[i])
 
     return np.array(images), np.array(labels)
+    
+def process_data(data, transformations=[40, 5, 5]):
+    for i in range(data.shape[0]):
+        data[i] = preprocess(data[i])
+    return data

@@ -1,7 +1,7 @@
 import tensorflow as tf
 from tensorflow.contrib.layers import flatten
 
-def model(x):
+def model(x, keep_prob):
     mu = 0
     sigma = 0.1
 
@@ -67,6 +67,8 @@ def model(x):
     fc2_W  = tf.Variable(tf.truncated_normal(shape=(120, 43), mean = mu, stddev = sigma), name="fc2_W")
     fc2_b  = tf.Variable(tf.zeros(43), name="fc2_b")
     logits    = tf.matmul(fc1, fc2_W) + fc2_b
-
-    regularizer = tf.nn.l2_loss(conv1_W) + tf.nn.l2_loss(conv2_W) + tf.nn.l2_loss(conv3_W) + tf.nn.l2_loss(conv4_W) + tf.l2_loss(fc1_W) + tf.l2_loss(fc2_W)
+    
+    # regularization
+    regularizer = tf.nn.l2_loss(conv1_W) + tf.nn.l2_loss(conv2_W) + tf.nn.l2_loss(conv3_W) + tf.nn.l2_loss(conv4_W) + tf.nn.l2_loss(fc1_W) + tf.nn.l2_loss(fc2_W)
+    
     return logits, regularizer
